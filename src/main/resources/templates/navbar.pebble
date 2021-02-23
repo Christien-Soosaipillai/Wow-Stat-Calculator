@@ -1,0 +1,45 @@
+<style>
+.container-1{ 
+	
+}
+
+.container-1 div{ 
+	
+}
+
+.box-1{
+
+}
+
+.box-2{
+
+}
+
+.box-3{
+
+}
+</style>
+<div class="container-1">
+	<!--
+	<nav class="">
+		<ul>
+			<li>Account</li>
+			<li>Home</li>
+			<li>About</li>
+			<li>Sign-out</li>	
+		</ul>
+	</nav>
+	-->
+	<div class="box-1">
+		Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy
+	</div>
+	
+	<div class="box-1">
+		Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC
+	</div>
+	
+	<div class="box-1">
+		It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout
+	</div>
+	
+</div>

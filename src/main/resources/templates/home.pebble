@@ -1,0 +1,31 @@
+{% extends 'base' %}
+{% block content %}
+	
+<div id="home-screen">
+	<h2>Welcome to Homescreen</h2>
+</div>	
+
+
+<script>
+	var userData = {
+			username: "{{username|raw}}",
+			fullName: "{{fullName|raw}}"
+	}
+	
+	new Vue({
+		el: '#home-screen',
+			data:{
+				...userData,
+				status: ''
+			},
+			mounted:function(){
+		  	},
+			methods:{
+				
+				
+			}
+	});
+	
+</script>
+{% endblock content %}
+

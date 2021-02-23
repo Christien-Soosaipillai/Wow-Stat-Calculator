@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>SignUp Screen</title>
+        <!-- Scripts -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="/javascript/vue.min.js"></script>
+        <script src="/javascript/vuelidate.min.js"></script>
+        <script src="/javascript/validators.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+        <script src="/javascript/import-module.js" type=""></script>
+        <!-- CSS -->
+        <!-- Latest compiled and minified JavaScript -->
+		<script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" crossorigin="anonymous"></script>
+		<link rel="stylesheet" href="/css/flexbox.css"> 
+    </head>
+    <body>
+        
+        {% include 'navbar'%}
+
+        <div>
+        	{% block content %}
+        		{# This section to include all content child templates#}
+        	{% endblock content %}
+        </div>
+        
+    </body>
+</html>

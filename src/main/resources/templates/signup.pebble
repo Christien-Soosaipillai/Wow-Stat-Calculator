@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>SignUp Screen</title>
+        <!-- CSS -->
+        <link rel="stylesheet" type ="text/css" href="/css/bootstrap.min.css"/>
+        <!-- Scripts -->
+        <script src="/javascript/vue.min.js"></script>
+        <script src="/javascript/vuelidate.min.js"></script>
+        <script src="/javascript/validators.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+        <script src="/javascript/import-module.js" type=""></script>
+    </head>
+    <body>
+        <div id="signup-app">
+        	<h3>Login Screen</h3>
+            <div>
+                <label>First Name: </label>
+                <input type="text" v-model="firstName">
+                <span class="text-danger" v-if="status == 'ERROR' && !$v.firstName.required">FirstName is required*</span>
+            </div>
+
+            <div>
+                <label>Last Name: </label>
+                <input type="text" v-model="lastName">
+                <span class="text-danger" v-if="status == 'ERROR' && !$v.lastName.required">LastName is required*</span>
+            </div>
+
+            <div>
+                <label>Username: </label>
+                <input type="text" v-model="username">
+                <span class="text-danger" v-if="status == 'ERROR' && !$v.username.required">Username is required*</span>
+                <span class="text-danger" v-if="status == 'ERROR' && !$v.username.minLength">Username must have at least {{$v.username.$params.minLength.min}} characters.</span>
+            </div>
+
+            <div>
+                <label>Email: </label>
+                <input type="text" v-model="email">
+                <span class="text-danger" v-if="status == 'ERROR' && !$v.email.required">Email is required*</span>
+            </div>
+
+            <div>
+                <label>Password: </label>
+                <input type="password" v-model="password">
+                <span class="text-danger" v-if="status == 'ERROR' && !$v.password.required">password is required*</span>
+                <span class="text-danger" v-if="status == 'ERROR' && !$v.password.minLength">Name must have at least {{$v.password.$params.minLength.min}} characters.</span>
+            </div>
+
+            <div>
+                <label>Re-enter Password: </label>
+                <input type="password" v-model="password2">
+                <span class="text-danger" v-if="status == 'ERROR' && !$v.password2.required">password is required*</span>
+                <span class="text-danger" v-if="status == 'ERROR' && !$v.password2.sameAsPassword">Password re-entry doesn't match*</span>
+            </div>
+            
+            <button v-on:click="signUp">Sign Up</button>
+        </div>
+    </body>
+</html>
+
+
+<script>
+
+
+new Vue({
+    el: '#signup-app',
+        data: {
+            firstName: '',
+            lastName: '',
+            username: '',
+            email: '',
+            password: '',
+            password2: '',
+            status: ''
+        },
+        validations: {
+            firstName: {
+            	required 
+            },
+            lastName:{
+            	required
+            },
+            username:{
+            	required,
+            	minLength: minLength(6)
+            },
+            email:{
+            	required
+            },
+            password:{
+            	required,
+            	minLength: minLength(9)
+            },
+            password2:{
+            	required,
+            	sameAsPassword: sameAs('password')
+            }
+
+        },
+        methods:{
+            checkValidations(){
+            	this.$v.$touch();
+                if(this.$v.$invalid) {
+                	this.status = "ERROR";
+                	return false;
+                }else{
+                	this.status = '';
+                	return true;
+                }
+            },
+            signUp(){
+            	if(!this.checkValidations()){
+            		return;
+            	}else{
+            		axios({
+    					method: 'post',
+    					url: 'http://localhost:8080/api/signup',
+    					data: {
+    						email: this.email,
+    						username: this.username, 
+    						firstName: this.firstName,
+    						lastName: this.lastName,
+    						password: this.password
+    					}
+    				})
+    				.then(res => {
+    					alert("Success, Account created!");
+    					window.location = "http://localhost:8080/login";
+    				})
+    				.catch(err => console.log(err));
+            	}
+            }
+        }
+    });
+
+</script>
