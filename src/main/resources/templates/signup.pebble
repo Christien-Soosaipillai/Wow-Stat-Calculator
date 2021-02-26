@@ -31,7 +31,7 @@
                 <label>Username: </label>
                 <input type="text" v-model="username">
                 <span class="text-danger" v-if="status == 'ERROR' && !$v.username.required">Username is required*</span>
-                <span class="text-danger" v-if="status == 'ERROR' && !$v.username.minLength">Username must have at least {{$v.username.$params.minLength.min}} characters.</span>
+                <span class="text-danger" v-if="status == 'ERROR' && !$v.username.minLength">Username must have at least {{v.username.params.minLength.min}} characters.</span>
             </div>
 
             <div>
@@ -44,7 +44,7 @@
                 <label>Password: </label>
                 <input type="password" v-model="password">
                 <span class="text-danger" v-if="status == 'ERROR' && !$v.password.required">password is required*</span>
-                <span class="text-danger" v-if="status == 'ERROR' && !$v.password.minLength">Name must have at least {{$v.password.$params.minLength.min}} characters.</span>
+                <span class="text-danger" v-if="status == 'ERROR' && !$v.password.minLength">Name must have at least {{v.password.params.minLength.min}} characters.</span>
             </div>
 
             <div>

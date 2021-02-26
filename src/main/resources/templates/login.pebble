@@ -7,7 +7,7 @@
 		<div id="login-app">
 			<h3>Login Screen</h3>
 			<div>
-				<input v-model="identification" placeholder="Username or Email">
+				<input v-model="username" placeholder="Username or Email">
 				<input v-model="password" type="password" placeholder="Password">
 				<p class="text-danger" v-if="status == 'ERROR'">The username or password was incorrect, please try again</p>
 				<button @click="getRequest()">Login</button>
@@ -29,17 +29,18 @@
 		data: {
 			val: '{{val | raw}}',
 			userdata: '',
-			identification: '',
+			username: '',
 			password: '',
 			status: ''
 		},
 		methods:{
 			getRequest(){
+			    console.log("HERE");
 				axios({
 					method: 'post',
 					url: 'http://localhost:8080/api/login',
 					data: {
-						identification: this.identification,
+						username: this.username,
 						password: this.password
 					}
 				})
@@ -49,7 +50,8 @@
 				})
 				.catch(err => {
 					this.status = "ERROR";
-					
+					console.log("error")
+					Leet
 				});
 			}
 		}

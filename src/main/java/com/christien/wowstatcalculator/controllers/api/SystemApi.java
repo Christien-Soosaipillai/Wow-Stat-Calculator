@@ -3,12 +3,16 @@ package com.christien.wowstatcalculator.controllers.api;
 import com.christien.wowstatcalculator.entities.User;
 import com.christien.wowstatcalculator.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api")
@@ -23,25 +27,36 @@ public class SystemApi {
 	}
 
 	@RequestMapping(value = "/login", method=RequestMethod.POST)
-	public User login(@RequestBody Map<String, String> data, HttpServletRequest request){
-		String identification = String.valueOf(data.get("identification"));
+	@ResponseBody
+	public ResponseEntity login(@RequestBody Map<String, String> data, HttpServletRequest request){
+		String username = String.valueOf(data.get("username"));
 		String password = String.valueOf(data.get("password"));
-		List<User> users = userRepository.findAll();
+		Optional<User> user = userRepository.findByUsername(username);
 		HttpSession session = request.getSession();
-		User user = users.stream().filter(u ->{
-			if(u.getEmail().equals(identification) || u.getUsername().equals(identification)) {
-				if(u.getPassword().equals(password)) {
-					return true;
-				}
+		if(user.isPresent()){
+			if(password.equals(user.get().getPassword())){
+				session.setAttribute(username, user);
+				return ResponseEntity.ok(user);
+			}else{
+				return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
 			}
-			return false;
-		}).findFirst().get();
-		if(user != null) {
-			session.setAttribute(user.getUsername(), user);
-			return user;
-		}else {
-			return null;
+		}else{
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
 		}
+//		Optional<User> user = users.stream().filter(u ->{
+//			if(u.getEmail().equals(identification) || u.getUsername().equals(identification)) {
+//				if(u.getPassword().equals(password)) {
+//					return true;
+//				}
+//			}
+//			return false;
+//		}).findFirst().get();
+//		if(user != null) {
+//			session.setAttribute(user.getUsername(), user);
+//			return user;
+//		}else {
+//			return null;
+//		}
 
 	}
 
